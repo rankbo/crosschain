@@ -1,0 +1,564 @@
+{
+    "contractName": "TopLightBridge",
+    "abi": [
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "unpause",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "paused",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "get_block",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "renounceOwnership",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "sync_block",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "pause",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "init_genesis_block",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "transferOwnership",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "Pause",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "Unpause",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "previousOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "OwnershipRenounced",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "name": "previousOwner",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "OwnershipTransferred",
+            "type": "event"
+        }
+    ],
+    "metadata": "{\"compiler\":{\"version\":\"0.4.24+commit.e67f0147\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"get_block\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"sync_block\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"init_genesis_block\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"Pause\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"Unpause\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"}],\"name\":\"OwnershipRenounced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{\"pause()\":{\"details\":\"called by the owner to pause, triggers stopped state\"},\"renounceOwnership()\":{\"details\":\"Allows the current owner to relinquish control of the contract.\"},\"transferOwnership(address)\":{\"details\":\"Allows the current owner to transfer control of the contract to a newOwner.\",\"params\":{\"_newOwner\":\"The address to transfer ownership to.\"}},\"unpause()\":{\"details\":\"called by the owner to unpause, returns to normal state\"}}},\"userdoc\":{\"methods\":{\"renounceOwnership()\":{\"notice\":\"Renouncing to ownership will leave the contract without an owner. It will not be possible to call the functions with the `onlyOwner` modifier anymore.\"}}}},\"settings\":{\"compilationTarget\":{\"d:/workspace/topnetwork/github/crosschain/contracts/Top/TopLightBridge.sol\":\"TopLightBridge\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"d:/workspace/topnetwork/github/crosschain/contracts/Top/TopLightBridge.sol\":{\"keccak256\":\"0x925367a72f53ee33682c710b18171106510b4c8a76b9c0ab058efe3b7ebe5ab8\",\"urls\":[\"bzzr://c0a94cd53ace919dc5739deb2af0dd9c27a73e93f28ae2dfd93ef95077b314dd\"]},\"d:/workspace/topnetwork/github/crosschain/node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol\":{\"keccak256\":\"0xc7e4c07a9b6ec87a56d4725c53bea9853ebdb36b50e233346da1c19a29f5fcc9\",\"urls\":[\"bzzr://00c60a2ceaeaea22950f100de0da8af10de31f66db76604b3b70c47f883eb570\"]},\"d:/workspace/topnetwork/github/crosschain/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol\":{\"keccak256\":\"0x84c7090c27cf3657b73d9e26b6b316975fa0bd233b8169f254de0c3b3acfaefc\",\"urls\":[\"bzzr://b983355647976c1daa5de581a1b6a41be9c5adc17cce257b8679649db78f8a11\"]}},\"version\":1}",
+    "bytecode": "608060405260008054600160a860020a03191633179055610432806100256000396000f3006080604052600436106100985763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633f4ba83a811461009d5780635c975abb146100b457806369a1a596146100dd578063715018a6146100f257806373cc754f146100dd5780638456cb59146101075780638da5cb5b1461011c578063b88b47f81461014d578063f2fde38b14610162575b600080fd5b3480156100a957600080fd5b506100b2610183565b005b3480156100c057600080fd5b506100c961020a565b604080519115158252519081900360200190f35b3480156100e957600080fd5b506100c961022b565b3480156100fe57600080fd5b506100b2610230565b34801561011357600080fd5b506100b261029c565b34801561012857600080fd5b50610131610339565b60408051600160a060020a039092168252519081900360200190f35b34801561015957600080fd5b506100c9610348565b34801561016e57600080fd5b506100b2600160a060020a0360043516610366565b600054600160a060020a0316331461019a57600080fd5b60005474010000000000000000000000000000000000000000900460ff1615156101c357600080fd5b6000805474ff0000000000000000000000000000000000000000191681556040517f7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b339190a1565b60005474010000000000000000000000000000000000000000900460ff1681565b600190565b600054600160a060020a0316331461024757600080fd5b60008054604051600160a060020a03909116917ff8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c6482091a26000805473ffffffffffffffffffffffffffffffffffffffff19169055565b600054600160a060020a031633146102b357600080fd5b60005474010000000000000000000000000000000000000000900460ff16156102db57600080fd5b6000805474ff00000000000000000000000000000000000000001916740100000000000000000000000000000000000000001781556040517f6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff6259190a1565b600054600160a060020a031681565b60008054600160a060020a0316331461036057600080fd5b50600190565b600054600160a060020a0316331461037d57600080fd5b61038681610389565b50565b600160a060020a038116151561039e57600080fd5b60008054604051600160a060020a03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a36000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a72305820f5dd14995b1835f773497782dacbc632360a0e33bf8d2b142a7a0d3203192d3b0029",
+    "deployedBytecode": "6080604052600436106100985763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633f4ba83a811461009d5780635c975abb146100b457806369a1a596146100dd578063715018a6146100f257806373cc754f146100dd5780638456cb59146101075780638da5cb5b1461011c578063b88b47f81461014d578063f2fde38b14610162575b600080fd5b3480156100a957600080fd5b506100b2610183565b005b3480156100c057600080fd5b506100c961020a565b604080519115158252519081900360200190f35b3480156100e957600080fd5b506100c961022b565b3480156100fe57600080fd5b506100b2610230565b34801561011357600080fd5b506100b261029c565b34801561012857600080fd5b50610131610339565b60408051600160a060020a039092168252519081900360200190f35b34801561015957600080fd5b506100c9610348565b34801561016e57600080fd5b506100b2600160a060020a0360043516610366565b600054600160a060020a0316331461019a57600080fd5b60005474010000000000000000000000000000000000000000900460ff1615156101c357600080fd5b6000805474ff0000000000000000000000000000000000000000191681556040517f7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b339190a1565b60005474010000000000000000000000000000000000000000900460ff1681565b600190565b600054600160a060020a0316331461024757600080fd5b60008054604051600160a060020a03909116917ff8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c6482091a26000805473ffffffffffffffffffffffffffffffffffffffff19169055565b600054600160a060020a031633146102b357600080fd5b60005474010000000000000000000000000000000000000000900460ff16156102db57600080fd5b6000805474ff00000000000000000000000000000000000000001916740100000000000000000000000000000000000000001781556040517f6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff6259190a1565b600054600160a060020a031681565b60008054600160a060020a0316331461036057600080fd5b50600190565b600054600160a060020a0316331461037d57600080fd5b61038681610389565b50565b600160a060020a038116151561039e57600080fd5b60008054604051600160a060020a03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a36000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a72305820f5dd14995b1835f773497782dacbc632360a0e33bf8d2b142a7a0d3203192d3b0029",
+    "sourceMap": "271:310:0:-;;;268:5:1;247:26;;-1:-1:-1;;;;;;567:18:2;575:10;567:18;;;271:310:0;;;;;;",
+    "deployedSourceMap": "271:310:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;838:92:1;;8:9:-1;5:2;;;30:1;27;20:12;5:2;838:92:1;;;;;;247:26;;8:9:-1;5:2;;;30:1;27;20:12;5:2;247:26:1;;;;;;;;;;;;;;;;;;;;;;500:78:0;;8:9:-1;5:2;;;30:1;27;20:12;5:2;500:78:0;;;;1001:111:2;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1001:111:2;;;;666:90:1;;8:9:-1;5:2;;;30:1;27;20:12;5:2;666:90:1;;;;238:20:2;;8:9:-1;5:2;;;30:1;27;20:12;5:2;238:20:2;;;;;;;;-1:-1:-1;;;;;238:20:2;;;;;;;;;;;;;;314:94:0;;8:9:-1;5:2;;;30:1;27;20:12;5:2;314:94:0;;;;1274:103:2;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1274:103:2;-1:-1:-1;;;;;1274:103:2;;;;;838:92:1;719:5:2;;-1:-1:-1;;;;;719:5:2;705:10;:19;697:28;;;;;;568:6:1;;;;;;;560:15;;;;;;;;900:5;891:14;;-1:-1:-1;;891:14:1;;;916:9;;;;900:5;916:9;838:92::o;247:26::-;;;;;;;;;:::o;500:78:0:-;566:4;500:78;:::o;1001:111:2:-;719:5;;-1:-1:-1;;;;;719:5:2;705:10;:19;697:28;;;;;;1077:5;;;1058:25;;-1:-1:-1;;;;;1077:5:2;;;;1058:25;;;1105:1;1089:18;;-1:-1:-1;;1089:18:2;;;1001:111::o;666:90:1:-;719:5:2;;-1:-1:-1;;;;;719:5:2;705:10;:19;697:28;;;;;;416:6:1;;;;;;;415:7;407:16;;;;;;720:6;:13;;-1:-1:-1;;720:13:1;;;;;744:7;;;;720:6;744:7;666:90::o;238:20:2:-;;;-1:-1:-1;;;;;238:20:2;;:::o;314:94:0:-;372:4;719:5:2;;-1:-1:-1;;;;;719:5:2;705:10;:19;697:28;;;;;;-1:-1:-1;396:4:0;314:94;:::o;1274:103:2:-;719:5;;-1:-1:-1;;;;;719:5:2;705:10;:19;697:28;;;;;;1343:29;1362:9;1343:18;:29::i;:::-;1274:103;:::o;1512:171::-;-1:-1:-1;;;;;1582:23:2;;;;1574:32;;;;;;1638:5;;;1617:38;;-1:-1:-1;;;;;1617:38:2;;;;1638:5;;;1617:38;;;1661:5;:17;;-1:-1:-1;;1661:17:2;-1:-1:-1;;;;;1661:17:2;;;;;;;;;;1512:171::o",
+    "sourcePath": "d:/workspace/topnetwork/github/crosschain/contracts/Top/TopLightBridge.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.4.24+commit.e67f0147"
+    },
+    "ast": {
+        "absolutePath": "d:/workspace/topnetwork/github/crosschain/contracts/Top/TopLightBridge.sol",
+        "exportedSymbols": {
+            "TopLightBridge": [
+                32
+            ]
+        },
+        "id": 33,
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 1,
+                "literals": [
+                    "solidity",
+                    ">=",
+                    "0.4",
+                    ".17",
+                    "<",
+                    "0.9",
+                    ".0"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "0:32:0"
+            },
+            {
+                "absolutePath": "d:/workspace/topnetwork/github/crosschain/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol",
+                "file": "d:/workspace/topnetwork/github/crosschain/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol",
+                "id": 2,
+                "nodeType": "ImportDirective",
+                "scope": 33,
+                "sourceUnit": 179,
+                "src": "36:114:0",
+                "symbolAliases": [],
+                "unitAlias": ""
+            },
+            {
+                "absolutePath": "d:/workspace/topnetwork/github/crosschain/node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol",
+                "file": "d:/workspace/topnetwork/github/crosschain/node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol",
+                "id": 3,
+                "nodeType": "ImportDirective",
+                "scope": 33,
+                "sourceUnit": 93,
+                "src": "152:115:0",
+                "symbolAliases": [],
+                "unitAlias": ""
+            },
+            {
+                "baseContracts": [
+                    {
+                        "arguments": null,
+                        "baseName": {
+                            "contractScope": null,
+                            "id": 4,
+                            "name": "Pausable",
+                            "nodeType": "UserDefinedTypeName",
+                            "referencedDeclaration": 92,
+                            "src": "298:8:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_Pausable_$92",
+                                "typeString": "contract Pausable"
+                            }
+                        },
+                        "id": 5,
+                        "nodeType": "InheritanceSpecifier",
+                        "src": "298:8:0"
+                    }
+                ],
+                "contractDependencies": [
+                    178,
+                    92
+                ],
+                "contractKind": "contract",
+                "documentation": null,
+                "fullyImplemented": true,
+                "id": 32,
+                "linearizedBaseContracts": [
+                    32,
+                    92,
+                    178
+                ],
+                "name": "TopLightBridge",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "body": {
+                            "id": 14,
+                            "nodeType": "Block",
+                            "src": "378:30:0",
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "argumentTypes": null,
+                                        "hexValue": "74727565",
+                                        "id": 12,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": true,
+                                        "kind": "bool",
+                                        "lValueRequested": false,
+                                        "nodeType": "Literal",
+                                        "src": "396:4:0",
+                                        "subdenomination": null,
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        },
+                                        "value": "true"
+                                    },
+                                    "functionReturnParameters": 11,
+                                    "id": 13,
+                                    "nodeType": "Return",
+                                    "src": "389:11:0"
+                                }
+                            ]
+                        },
+                        "documentation": null,
+                        "id": 15,
+                        "implemented": true,
+                        "isConstructor": false,
+                        "isDeclaredConst": false,
+                        "modifiers": [
+                            {
+                                "arguments": null,
+                                "id": 8,
+                                "modifierName": {
+                                    "argumentTypes": null,
+                                    "id": 7,
+                                    "name": "onlyOwner",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 126,
+                                    "src": "344:9:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_modifier$__$",
+                                        "typeString": "modifier ()"
+                                    }
+                                },
+                                "nodeType": "ModifierInvocation",
+                                "src": "344:9:0"
+                            }
+                        ],
+                        "name": "init_genesis_block",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 6,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "341:2:0"
+                        },
+                        "payable": false,
+                        "returnParameters": {
+                            "id": 11,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 10,
+                                    "name": "",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 15,
+                                    "src": "372:4:0",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    },
+                                    "typeName": {
+                                        "id": 9,
+                                        "name": "bool",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "372:4:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "value": null,
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "371:6:0"
+                        },
+                        "scope": 32,
+                        "src": "314:94:0",
+                        "stateMutability": "nonpayable",
+                        "superFunction": null,
+                        "visibility": "external"
+                    },
+                    {
+                        "body": {
+                            "id": 22,
+                            "nodeType": "Block",
+                            "src": "462:30:0",
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "argumentTypes": null,
+                                        "hexValue": "74727565",
+                                        "id": 20,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": true,
+                                        "kind": "bool",
+                                        "lValueRequested": false,
+                                        "nodeType": "Literal",
+                                        "src": "480:4:0",
+                                        "subdenomination": null,
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        },
+                                        "value": "true"
+                                    },
+                                    "functionReturnParameters": 19,
+                                    "id": 21,
+                                    "nodeType": "Return",
+                                    "src": "473:11:0"
+                                }
+                            ]
+                        },
+                        "documentation": null,
+                        "id": 23,
+                        "implemented": true,
+                        "isConstructor": false,
+                        "isDeclaredConst": false,
+                        "modifiers": [],
+                        "name": "sync_block",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 16,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "435:2:0"
+                        },
+                        "payable": false,
+                        "returnParameters": {
+                            "id": 19,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 18,
+                                    "name": "",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 23,
+                                    "src": "456:4:0",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    },
+                                    "typeName": {
+                                        "id": 17,
+                                        "name": "bool",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "456:4:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "value": null,
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "455:6:0"
+                        },
+                        "scope": 32,
+                        "src": "416:76:0",
+                        "stateMutability": "nonpayable",
+                        "superFunction": null,
+                        "visibility": "external"
+                    },
+                    {
+                        "body": {
+                            "id": 30,
+                            "nodeType": "Block",
+                            "src": "548:30:0",
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "argumentTypes": null,
+                                        "hexValue": "74727565",
+                                        "id": 28,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": true,
+                                        "kind": "bool",
+                                        "lValueRequested": false,
+                                        "nodeType": "Literal",
+                                        "src": "566:4:0",
+                                        "subdenomination": null,
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        },
+                                        "value": "true"
+                                    },
+                                    "functionReturnParameters": 27,
+                                    "id": 29,
+                                    "nodeType": "Return",
+                                    "src": "559:11:0"
+                                }
+                            ]
+                        },
+                        "documentation": null,
+                        "id": 31,
+                        "implemented": true,
+                        "isConstructor": false,
+                        "isDeclaredConst": true,
+                        "modifiers": [],
+                        "name": "get_block",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 24,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "518:2:0"
+                        },
+                        "payable": false,
+                        "returnParameters": {
+                            "id": 27,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 26,
+                                    "name": "",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 31,
+                                    "src": "542:4:0",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    },
+                                    "typeName": {
+                                        "id": 25,
+                                        "name": "bool",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "542:4:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "value": null,
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "541:6:0"
+                        },
+                        "scope": 32,
+                        "src": "500:78:0",
+                        "stateMutability": "view",
+                        "superFunction": null,
+                        "visibility": "public"
+                    }
+                ],
+                "scope": 33,
+                "src": "271:310:0"
+            }
+        ],
+        "src": "0:582:0"
+    },
+    "functionHashes": {
+        "get_block()": "69a1a596",
+        "init_genesis_block()": "b88b47f8",
+        "owner()": "8da5cb5b",
+        "pause()": "8456cb59",
+        "paused()": "5c975abb",
+        "renounceOwnership()": "715018a6",
+        "sync_block()": "73cc754f",
+        "transferOwnership(address)": "f2fde38b",
+        "unpause()": "3f4ba83a"
+    },
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "214800",
+            "executionCost": "20525",
+            "totalCost": "235325"
+        },
+        "external": {
+            "get_block()": "234",
+            "init_genesis_block()": "646",
+            "owner()": "669",
+            "pause()": "21763",
+            "paused()": "429",
+            "renounceOwnership()": "22138",
+            "sync_block()": "278",
+            "transferOwnership(address)": "22936",
+            "unpause()": "21650"
+        }
+    }
+}
