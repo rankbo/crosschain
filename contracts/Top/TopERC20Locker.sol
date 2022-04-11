@@ -27,7 +27,7 @@ contract ERC20Locker is ILocker, Locker, AdminControlled {
                 ITopProve _prover,
                 uint64 _minBlockAcceptanceHeight,
                 address _admin,
-                uint _pausedFlags)
+                uint _pausedFlags) public
         AdminControlled(_admin, _pausedFlags)
         Locker(_ethMinerContract, _prover, _minBlockAcceptanceHeight)
     {

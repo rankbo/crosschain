@@ -23,7 +23,7 @@ contract TopMiner is IMiner, AdminControlled {
     address public peerLockContract;
     ITopProve public prover;
 
-    constructor (address _peerLockContract, ITopProve _prover) Ownable(msg.sender) {
+    constructor (address _peerLockContract, ITopProve _prover) public Ownable(msg.sender) {
         peerLockContract = _peerLockContract;
         prover = _prover;
     }

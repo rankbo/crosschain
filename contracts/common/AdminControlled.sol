@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity >=0.4.17 <0.9.0;
+pragma solidity ^0.8;
 
 contract AdminControlled {
     address public admin;
@@ -10,7 +10,7 @@ contract AdminControlled {
         paused = flags;
     }
 
-    modifier onlyAdmin() {
+    modifier onlyAdmin {
         require(msg.sender == admin);
         _;
     }
