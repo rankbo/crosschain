@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "../../common/Borsh.sol";
+import "hardhat/console.sol";
 
 library NearDecoder {
     using Borsh for Borsh.Data;
@@ -28,6 +29,7 @@ library NearDecoder {
         require(data.decodeU8() == 0, "Parse error: invalid signature type");
         res.r = data.decodeBytes32();
         res.s = data.decodeBytes32();
+
     }
 
     struct BlockProducer {
@@ -129,6 +131,7 @@ library NearDecoder {
 
     function decodeLightClientBlock(Borsh.Data memory data) internal view returns (LightClientBlock memory res) {
         res.prev_block_hash = data.decodeBytes32();
+    
         res.next_block_inner_hash = data.decodeBytes32();
         res.inner_lite = data.decodeBlockHeaderInnerLite();
         res.inner_rest_hash = data.decodeBytes32();
@@ -136,14 +139,28 @@ library NearDecoder {
 
         uint length = data.decodeU32();
         res.approvals_after_next = new OptionalSignature[](length);
+         console.log("approvals_after_next length %s ", length);
         for (uint i = 0; i < length; i++) {
             res.approvals_after_next[i] = data.decodeOptionalSignature();
+            console.logBytes32( res.approvals_after_next[i].signature.r);
         }
 
+
+        console.logBytes32(res.inner_lite.hash);
+        console.logBytes32(res.inner_rest_hash);
+         bytes memory result1   =    abi.encodePacked(res.inner_lite.hash, res.inner_rest_hash);
+        console.log("result1 ");
+        console.logBytes(result1);
+         bytes32   hash1 = sha256(abi.encodePacked(res.inner_lite.hash, res.inner_rest_hash));
+        console.log("hash1 " );
+         console.logBytes32(hash1);
+        bytes memory result2 =   abi.encodePacked(sha256(abi.encodePacked(res.inner_lite.hash, res.inner_rest_hash)), res.prev_block_hash);
+        console.log("result2 " );
+         console.logBytes(result2);
         res.hash = sha256(
             abi.encodePacked(sha256(abi.encodePacked(res.inner_lite.hash, res.inner_rest_hash)), res.prev_block_hash)
         );
-
+     //     console.logBytes32( res.hash );
         res.next_hash = sha256(abi.encodePacked(res.next_block_inner_hash, res.hash));
     }
 }

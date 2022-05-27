@@ -6,6 +6,7 @@ import "../bridge/INearBridge.sol";
 import "../bridge/NearDecoder.sol";
 import "./ProofDecoder.sol";
 import "./INearProver.sol";
+import "hardhat/console.sol";
 
 contract NearProver is INearProver, AdminControlled {
     using Borsh for Borsh.Data;
@@ -36,21 +37,39 @@ contract NearProver is INearProver, AdminControlled {
         ProofDecoder.FullOutcomeProof memory fullOutcomeProof = borsh.decodeFullOutcomeProof();
         borsh.done();
 
+        console.log("outcome_with_id.hash "); 
+        console.logBytes32(fullOutcomeProof.outcome_proof.outcome_with_id.hash);
+
         bytes32 hash = _computeRoot(
             fullOutcomeProof.outcome_proof.outcome_with_id.hash,
             fullOutcomeProof.outcome_proof.proof
         );
 
-        hash = sha256(abi.encodePacked(hash));
+      //  console.log("outcome_with_id.hash hash"); 
+     //   console.logBytes32(hash);
+      //  hash = sha256(abi.encodePacked(hash));
+      //   console.logBytes32(hash);
+
 
         hash = _computeRoot(hash, fullOutcomeProof.outcome_root_proof);
-
+         console.logBytes32(hash);
         require(
             hash == fullOutcomeProof.block_header_lite.inner_lite.outcome_root,
             "NearProver: outcome merkle proof is not valid"
         );
 
         bytes32 expectedBlockMerkleRoot = bridge.blockMerkleRoots(blockHeight);
+        console.log("block_header_lite.hash"); 
+        console.logBytes32(fullOutcomeProof.block_header_lite.hash);
+           console.log(" expectedBlockMerkleRoot"); 
+         console.logBytes32(expectedBlockMerkleRoot);
+
+        for (uint i = 0; i < fullOutcomeProof.block_proof.items.length; i++) {
+            console.log(" item.hash"); 
+            console.logBytes32(fullOutcomeProof.block_proof.items[i].hash);
+            console.logUint(fullOutcomeProof.block_proof.items[i].direction);
+        }
+
 
         require(
             _computeRoot(fullOutcomeProof.block_header_lite.hash, fullOutcomeProof.block_proof) ==

@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "../../common/Borsh.sol";
 import "../bridge/NearDecoder.sol";
+import "hardhat/console.sol";
 
 library ProofDecoder {
     using Borsh for Borsh.Data;
@@ -18,7 +19,7 @@ library ProofDecoder {
 
     function decodeFullOutcomeProof(Borsh.Data memory data) internal view returns (FullOutcomeProof memory proof) {
         proof.outcome_proof = data.decodeExecutionOutcomeWithIdAndProof();
-        proof.outcome_root_proof = data.decodeMerklePath();
+        proof.outcome_root_proof = data.decodeMerklePath(); //not used
         proof.block_header_lite = data.decodeBlockHeaderLight();
         proof.block_proof = data.decodeMerklePath();
     }
@@ -89,18 +90,31 @@ library ProofDecoder {
         }
 
         uint256 start = data.ptr;
+        console.log("receipt_ids  "); 
         outcome.receipt_ids = new bytes32[](data.decodeU32());
         for (uint i = 0; i < outcome.receipt_ids.length; i++) {
             outcome.receipt_ids[i] = data.decodeBytes32();
+            console.logBytes32(outcome.receipt_ids[i]);
         }
+        console.log("others   "); 
         outcome.gas_burnt = data.decodeU64();
+         console.logUint(outcome.gas_burnt ); 
         outcome.tokens_burnt = data.decodeU128();
+         console.logUint(outcome.tokens_burnt ); 
         outcome.executor_id = data.decodeBytes();
+
+        console.logBytes(outcome.executor_id);
+
         outcome.status = data.decodeExecutionStatus();
 
         outcome.merkelization_hashes = new bytes32[](1 + outcome.logs.length);
+        uint256 xxx =  data.ptr - start;
+          console.logUint(xxx ); 
         outcome.merkelization_hashes[0] = Utils.sha256Raw(start, data.ptr - start);
+        console.log("merkelization_hashes  "); 
+        console.logBytes32(outcome.merkelization_hashes[0]);
         for (uint i = 0; i < outcome.logs.length; i++) {
+             console.log("add logs   "); 
             outcome.merkelization_hashes[i + 1] = sha256(outcome.logs[i]);
         }
     }
@@ -120,6 +134,15 @@ library ProofDecoder {
         outcome.outcome = data.decodeExecutionOutcome();
 
         uint256 len = 1 + outcome.outcome.merkelization_hashes.length;
+
+         console.log("decodeExecutionOutcomeWithId ");
+         console.log("len ");
+        console.logUint(Utils.swapBytes4(uint32(len)));
+        console.logBytes32(outcome.id);
+         bytes memory result1  =   abi.encodePacked(Utils.swapBytes4(uint32(len)), outcome.id, outcome.outcome.merkelization_hashes);
+        console.log("result1 ");
+        console.logBytes(result1);
+
         outcome.hash = sha256(
             abi.encodePacked(Utils.swapBytes4(uint32(len)), outcome.id, outcome.outcome.merkelization_hashes)
         );
@@ -133,7 +156,9 @@ library ProofDecoder {
     function decodeMerklePathItem(Borsh.Data memory data) internal pure returns (MerklePathItem memory item) {
         item.hash = data.decodeBytes32();
         item.direction = data.decodeU8();
+
         require(item.direction < 2, "ProofDecoder: MerklePathItem direction should be 0 or 1");
+
     }
 
     struct MerklePath {
@@ -158,7 +183,7 @@ library ProofDecoder {
         view
         returns (ExecutionOutcomeWithIdAndProof memory outcome)
     {
-        outcome.proof = data.decodeMerklePath();
+        outcome.proof = data.decodeMerklePath(); 
         outcome.block_hash = data.decodeBytes32();
         outcome.outcome_with_id = data.decodeExecutionOutcomeWithId();
     }

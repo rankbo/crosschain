@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.0;
 
+
 import "../../common/AdminControlled.sol";
-import "./INearBridge.sol";
-import "./NearDecoder.sol";
-import "../../common/Ed25519.sol";
+import "./INearBridge2.sol";
+import "./NearDecoder2.sol";
 import "hardhat/console.sol";
 
-contract NearBridge is INearBridge, AdminControlled {
-    using Borsh for Borsh.Data;
-    using NearDecoder for Borsh.Data;
+
+contract NearBridge2 is  INearBridge2, AdminControlled {
 
     // Assumed to be even and to not exceed 256.
     uint constant MAX_BLOCK_PRODUCERS = 100;
@@ -25,7 +24,7 @@ contract NearBridge is INearBridge, AdminControlled {
     // Whether the contract was initialized.
     bool public initialized;
     uint256 public lockEthAmount;
-    Ed25519 immutable edwards;
+
     Epoch thisEpoch;
     address lastSubmitter;
     
@@ -35,14 +34,14 @@ contract NearBridge is INearBridge, AdminControlled {
     mapping(address => uint256) public override balanceOf;
 
     uint64 maxMainHeight;
-
+    
     constructor(
-        Ed25519 ed,
+       // Ed25519 ed,
         uint256 lockEthAmount_,
         address admin_,
         uint256 pausedFlags_
     ) AdminControlled(admin_, pausedFlags_) {
-        edwards = ed;
+      //  edwards = ed;
         lockEthAmount = lockEthAmount_;
     }
 
@@ -67,21 +66,16 @@ contract NearBridge is INearBridge, AdminControlled {
     }
 
     function initWithBlock(bytes memory data) public override onlyAdmin {
-        
         require(!initialized, "Wrong initialization stage");
         initialized = true;
 
-
-
-        Borsh.Data memory borsh = Borsh.from(data);
-        NearDecoder.LightClientBlock memory topBlock = borsh.decodeLightClientBlock();
-        borsh.done();
+        NearDecoder2.LightClientBlock memory topBlock = NearDecoder2.decodeLightClientBlock(data);
 
         require(topBlock.next_bps.some, "Initialization block must contain next_bps");
         setBlockProducers(topBlock.next_bps.blockProducers, thisEpoch);
-        blockHashes_[topBlock.inner_lite.height] = topBlock.hash;
+        blockHashes_[topBlock.inner_lite.height] = topBlock.block_hash;
         blockMerkleRoots_[topBlock.inner_lite.height] = topBlock.inner_lite.block_merkle_root;
-        blockHeights[topBlock.hash] = topBlock.inner_lite.height;
+        blockHeights[topBlock.block_hash] = topBlock.inner_lite.height;
         maxMainHeight = topBlock.inner_lite.height;
     }
 
@@ -99,12 +93,11 @@ contract NearBridge is INearBridge, AdminControlled {
 
     function addLightClientBlock(bytes memory data) public override pausable(PAUSED_ADD_BLOCK) {
         require(initialized, "Contract is not initialized");
-       //rank require(balanceOf[msg.sender] >= lockEthAmount, "Balance is not enough");
+        require(balanceOf[msg.sender] >= lockEthAmount, "Balance is not enough");
 
-        Borsh.Data memory borsh = Borsh.from(data);
-        NearDecoder.LightClientBlock memory topBlock = borsh.decodeLightClientBlock();
-        borsh.done();
-        require(topBlock.inner_lite.height == (maxMainHeight + 1));
+        NearDecoder2.LightClientBlock memory topBlock = NearDecoder2.decodeLightClientBlock(data);
+
+        require(topBlock.inner_lite.height >= (maxMainHeight + 1));
 
         require(topBlock.approvals_after_next.length >= thisEpoch.numBPs, "Approval list is too short");
         uint256 votedFor = 0;
@@ -122,39 +115,27 @@ contract NearBridge is INearBridge, AdminControlled {
             }
         }
         require(votedFor > thisEpoch.stakeThreshold, "Too few approvals");
-         console.log("22222 " );
+        
         for ((uint i, uint cnt) = (0, thisEpoch.numBPs); i < cnt; i++) {
-            NearDecoder.OptionalSignature memory approval = topBlock.approvals_after_next[i];
-           uint64 test =  Utils.swapBytes8(topBlock.inner_lite.height);
-              console.logUint( test  );
+            NearDecoder2.OptionalSignature memory approval = topBlock.approvals_after_next[i];
             if (approval.some) {
-                bytes memory message = abi.encodePacked(
+               /* bytes memory message = abi.encodePacked(
                     uint8(0),
                     topBlock.hash,
                     Utils.swapBytes8(topBlock.inner_lite.height),
                     bytes23(0)
                 );
-              
                 (bytes32 arg1, bytes9 arg2) = abi.decode(message, (bytes32, bytes9));
-                NearDecoder.Signature memory signature = approval.signature;
-                console.logBytes( message  );
-                console.logBytes32( arg1  );
-                console.logBytes9( arg2  );
-                console.logBytes32( signature.r );
-                console.logBytes32( signature.s  );
-                console.logBytes32(thisEpoch.keys[i]);
-              /* thisEpoch.keys[i] %s  signature.r %s signature.s %s arg1 %s  arg2 %s", 
-                        message, thisEpoch.keys[i], signature.r,signature.s,  arg1, arg2  );*/
+                NearDecoder2.Signature memory signature = approval.signature;
                 bool success = edwards.check(thisEpoch.keys[i], signature.r, signature.s, arg1, arg2);
-                require(success);
+                require(success);*/
             }
         }
-   
+
         if (topBlock.next_bps.some) {
             setBlockProducers(topBlock.next_bps.blockProducers, thisEpoch);
         }
-        console.log("block_merkle_root " );
-        console.logBytes32(topBlock.inner_lite.block_merkle_root);
+
         blockHashes_[topBlock.inner_lite.height] = topBlock.hash;
         blockMerkleRoots_[topBlock.inner_lite.height] = topBlock.inner_lite.block_merkle_root;
         blockHeights[topBlock.hash] = topBlock.inner_lite.height;
@@ -163,13 +144,14 @@ contract NearBridge is INearBridge, AdminControlled {
         maxMainHeight = topBlock.inner_lite.height;
     }
 
-    function setBlockProducers(NearDecoder.BlockProducer[] memory src, Epoch storage epoch) internal {
+    
+    function setBlockProducers(NearDecoder2.BlockProducer[] memory src, Epoch storage epoch) internal {
         uint cnt = src.length;
         require(cnt <= MAX_BLOCK_PRODUCERS, "It is not expected having that many block producers for the provided block");
         epoch.numBPs = cnt;
         unchecked {
             for (uint i = 0; i < cnt; i++) {
-                epoch.keys[i] = src[i].publicKey.k;
+                epoch.keys[i] = src[i].publicKey;
             }
             uint256 totalStake = 0; // Sum of uint128, can't be too big.
             for (uint i = 0; i != cnt; ++i) {
